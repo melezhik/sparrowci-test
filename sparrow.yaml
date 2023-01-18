@@ -1,0 +1,12 @@
+tasks:
+        name: test
+        default: true
+        language: Bash
+        code: |
+            set -e
+            set -x
+            zef build .
+            zef install .
+        depends:
+            -
+                name: install-zef-deps
