@@ -1,12 +1,27 @@
 tasks:
-        name: test
+    -
+        name: main
         default: true
         language: Bash
         code: |
-            set -e
-            set -x
-            zef build .
-            zef install .
+            echo "hello main"
         depends:
             -
-                name: install-zef-deps
+                name: task_A
+                queue: tasks
+                priority: 10
+            -
+                name: task_B
+                queue: tasks
+                priority: 1000
+    -
+        name: task_A
+        language: Bash
+        code: |
+            echo "hello task_A"
+    -
+        name: task_B
+        language: Bash
+        code: |
+            echo "hello task_B"
+                        
