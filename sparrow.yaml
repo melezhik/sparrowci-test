@@ -16,12 +16,29 @@ tasks:
                 priority: 1000
     -
         name: task_A
-        language: Bash
+        language: Raku
+        config:
+            foo: bar
         code: |
-            echo "hello task_A"
+            say "hello task_A";
+            say config().perl;
+        depends:
+            -
+                name: task_A1
+        if:
+            language: Raku
+            code: |
+                say "hello from task_A if ...";
+                say config.perl;
     -
         name: task_B
         language: Bash
         code: |
             echo "hello task_B"
+    -
+        name: task_A1
+        language: Raku
+        code: |
+            say "hello task_A1";
+            update_state %( message => "I am task_A1" );
                         
