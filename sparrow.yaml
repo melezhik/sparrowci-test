@@ -35,12 +35,12 @@ tasks:
         hub:
             language: Raku
             code: |
-            update_state %(
-                list => [
-                    { config => { aaa => "vvv" }  },
-                    { config => { aaaAAA => "vvvVVV" }  }
-                ]
-            );
+                update_state %(
+                    list => [
+                        { config => { aaa => "vvv" }  },
+                        { config => { aaaAAA => "vvvVVV" }  }
+                    ]
+                );
         followup:
             -
                 name: dump
