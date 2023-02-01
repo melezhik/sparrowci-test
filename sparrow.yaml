@@ -21,15 +21,26 @@ tasks:
             foo: bar
         code: |
             say "hello task_A";
-            say config().perl;
+            use Data::Dump;
+            say Dump(config(),:color);
         depends:
             -
                 name: task_A1
         if:
             language: Raku
             code: |
+                use Data::Dump;    
                 say "hello from task_A if ...";
-                say config.perl;
+                say Dump(config(),:color);
+        hub:
+            language: Raku
+            code: |
+            update_state %(
+                list => [
+                    { config => { aaa => "vvv" }  },
+                    { config => { aaaAAA => "vvvVVV" }  }
+                ]
+            );
         followup:
             -
                 name: dump
@@ -40,6 +51,7 @@ tasks:
         language: Bash
         code: |
             echo "hello task_B"
+            zef install Data::Dump --/test
     -
         name: task_A1
         language: Raku
@@ -54,5 +66,6 @@ tasks:
             foo1: foo1
         code: |
             say "hello dump";
-            say config().perl;
+            use Data::Dump;
+            say Dump(config(),:color);
 
