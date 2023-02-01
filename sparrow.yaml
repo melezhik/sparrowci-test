@@ -30,6 +30,11 @@ tasks:
             code: |
                 say "hello from task_A if ...";
                 say config.perl;
+        followup:
+            -
+                name: dump
+                config:
+                    param1: 1000
     -
         name: task_B
         language: Bash
@@ -41,4 +46,13 @@ tasks:
         code: |
             say "hello task_A1";
             update_state %( message => "I am task_A1" );
-                        
+
+    -
+        name: dump
+        language: Raku
+        config:
+            foo1: foo1
+        code: |
+            say "hello dump";
+            say config().perl;
+
