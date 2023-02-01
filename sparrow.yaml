@@ -23,6 +23,7 @@ tasks:
             say "hello task_A";
             use Data::Dump;
             say Dump(config(),:color);
+            update_state( time => config()<aaa>);
         depends:
             -
                 name: task_A1
@@ -35,10 +36,12 @@ tasks:
         hub:
             language: Raku
             code: |
+                use Data::Dump;
+                say Dump(config(),:color);
                 update_state %(
                     list => [
                         { config => { aaa => "vvv" }  },
-                        { config => { aaaAAA => "vvvVVV" }  }
+                        { config => { aaa => "vvvVVV" }  }
                     ]
                 );
         followup:
