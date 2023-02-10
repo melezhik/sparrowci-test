@@ -13,6 +13,7 @@ tasks:
 
   -
     name: install-java
+    language: Bash
     code: |
       set -e
       sudo apk add openjdk9 \
