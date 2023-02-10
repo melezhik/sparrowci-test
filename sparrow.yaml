@@ -1,74 +1,18 @@
 tasks:
-    -
-        name: main
-        default: true
-        language: Bash
-        code: |
-            echo "hello main"
-        depends:
-            -
-                name: task_A
-                queue: tasks
-                priority: 10
-            -
-                name: task_B
-                queue: tasks
-                priority: 1000
-    -
-        name: task_A
-        language: Raku
-        config:
-            foo: bar
-        code: |
-            say "hello task_A";
-            use Data::Dump;
-            say Dump(config(),:color);
-            update_state %( time => config()<aaa>);
-        depends:
-            -
-                name: task_A1
-        if:
-            language: Raku
-            code: |
-                use Data::Dump;    
-                say "hello from task_A if ...";
-                say Dump(config(),:color);
-        hub:
-            language: Raku
-            code: |
-                use Data::Dump;
-                say Dump(config(),:color);
-                update_state %(
-                    list => [
-                        { config => { aaa => "vvv" }  },
-                        { config => { aaa => "vvvVVV" }  }
-                    ]
-                );
-        followup:
-            -
-                name: dump
-                config:
-                    param1: 1000
-    -
-        name: task_B
-        language: Bash
-        code: |
-            echo "hello task_B"
-            zef install Data::Dump --/test
-    -
-        name: task_A1
-        language: Raku
-        code: |
-            say "hello task_A1";
-            update_state %( message => "I am task_A1" );
+  -
+    name: java-app
+    default: True
+    language: Bash
+    code: |
+      set -e
+      cd source/
+      # test your java app here 
+    depends:
+      -
+        name: install-java
 
-    -
-        name: dump
-        language: Raku
-        config:
-            foo1: foo1
-        code: |
-            say "hello dump";
-            use Data::Dump;
-            say Dump(config(),:color);
-
+  -
+    name: install-java
+    code: |
+      sudo apk add openjdk9 \
+      --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
